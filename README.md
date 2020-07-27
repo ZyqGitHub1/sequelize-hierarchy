@@ -296,3 +296,7 @@ Pull requests are very welcome. Please:
 * do not add an entry to changelog - changelog will be created when cutting releases
 * add tests for new features
 * document new functionality/API additions in README
+
+## What's new (on this fork)
+
+* Sequelize 6.3.3 compatibility: As Sequelize no longer uses Bluebird for promises, Bluebird was installed as a new dependency, and the utils's makeCo function was updated.
