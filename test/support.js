@@ -8,6 +8,7 @@ const fs = require('fs'),
 	chai = require('chai'),
 	{expect} = chai,
 	chaiAsPromised = require('chai-as-promised'),
+	Promise = require('bluebird'),
 	Config = require('./config/config');
 
 require('../lib/index')(Sequelize);
@@ -15,10 +16,10 @@ require('../lib/index')(Sequelize);
 chai.use(chaiAsPromised);
 
 // Make sure errors get thrown when testing
-Sequelize.Promise.onPossiblyUnhandledRejection((e) => {
+Promise.onPossiblyUnhandledRejection((e) => {
 	throw e;
 });
-Sequelize.Promise.longStackTraces();
+Promise.longStackTraces();
 
 const Support = {
 	Sequelize,
@@ -51,7 +52,7 @@ const Support = {
 				// We cannot promisify exists, since exists does not follow node callback convention -
 				// first argument is a boolean, not an error / null
 				if (fs.existsSync(p)) {
-					resolve(Sequelize.Promise.promisify(fs.unlink)(p));
+					resolve(Promise.promisify(fs.unlink)(p));
 				} else {
 					resolve();
 				}
@@ -69,7 +70,7 @@ const Support = {
 		if (callback) {
 			callback(sequelize);
 		} else {
-			return Sequelize.Promise.resolve(sequelize);
+			return Promise.resolve(sequelize);
 		}
 	},
 
@@ -116,7 +117,8 @@ const Support = {
 				sequelize.models = {};
 
 				return sequelize
-					.getQueryInterface()
+					// .getQueryInterface()
+					.queryInterface
 					.dropAllEnums();
 			});
 	},
