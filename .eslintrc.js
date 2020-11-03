@@ -1,7 +1,9 @@
-'use strict';
-
 module.exports = {
-	extends: [
-		'@overlookmotel/eslint-config'
-	]
+  extends: [
+    'eslint-config-airbnb-base',
+  ],
+  rules: {
+    'max-len': 0,
+    'no-param-reassign': 0,
+  },
 };
